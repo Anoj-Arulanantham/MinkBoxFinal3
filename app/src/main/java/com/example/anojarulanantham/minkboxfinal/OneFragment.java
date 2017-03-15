@@ -109,6 +109,9 @@ public class OneFragment extends Fragment {
         }
 
         if (requestCode == CAMERA_PIC_REQUEST) {
+                if(resultCode == 0) {
+                    return;
+                }
                 bitmap = (Bitmap) data.getExtras().get("data");
                 imageView = (ImageView) getActivity().findViewById(R.id.imageView);
                 imageView.setImageBitmap(bitmap);
