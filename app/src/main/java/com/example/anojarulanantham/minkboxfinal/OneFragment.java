@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
@@ -33,6 +34,7 @@ import static android.app.Activity.RESULT_OK;
 public class OneFragment extends Fragment {
     Bitmap bitmap = null;
     ImageView imageView = null;
+    ImageView cameraView = null;
 
     private static final int CAMERA_PIC_REQUEST = 1337;
 
@@ -52,7 +54,7 @@ public class OneFragment extends Fragment {
         Drawable myDrawable = getResources().getDrawable(R.drawable.harder);
         bitmap = ((BitmapDrawable) myDrawable).getBitmap();
 
-        Button getImage = (Button) v.findViewById(R.id.getImage);
+        ImageView getImage = (ImageView) v.findViewById(R.id.gallery);
         getImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,8 +77,8 @@ public class OneFragment extends Fragment {
             }
         });
 
-        Button camera = (Button) v.findViewById(R.id.camera);
-        camera.setOnClickListener(new View.OnClickListener() {
+        cameraView = (ImageView) v.findViewById(R.id.camera);
+        cameraView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 System.out.println("about to launch camera");
@@ -84,8 +86,6 @@ public class OneFragment extends Fragment {
                 startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
             }
         });
-
-
         return v;
     }
 
@@ -110,8 +110,8 @@ public class OneFragment extends Fragment {
 
         if (requestCode == CAMERA_PIC_REQUEST) {
                 bitmap = (Bitmap) data.getExtras().get("data");
-                ImageView imageview = (ImageView) getActivity().findViewById(R.id.imageView);
-                imageview.setImageBitmap(bitmap);
+                imageView = (ImageView) getActivity().findViewById(R.id.imageView);
+                imageView.setImageBitmap(bitmap);
         }
     }
 
