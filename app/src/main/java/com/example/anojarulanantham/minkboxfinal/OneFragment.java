@@ -34,6 +34,8 @@ public class OneFragment extends Fragment {
     Bitmap bitmap = null;
     ImageView imageView = null;
 
+    private static final int CAMERA_PIC_REQUEST = 1337;
+
     public OneFragment() {
 
     }
@@ -73,6 +75,17 @@ public class OneFragment extends Fragment {
             }
         });
 
+        Button camera = (Button) v.findViewById(R.id.camera);
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("about to launch camera");
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+            }
+        });
+
+
         return v;
     }
 
@@ -93,6 +106,12 @@ public class OneFragment extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+
+        if (requestCode == CAMERA_PIC_REQUEST) {
+                bitmap = (Bitmap) data.getExtras().get("data");
+                ImageView imageview = (ImageView) getActivity().findViewById(R.id.imageView);
+                imageview.setImageBitmap(bitmap);
         }
     }
 

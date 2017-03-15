@@ -39,6 +39,13 @@
         android:layout_below="@id/getImage"
         android:layout_marginBottom="11dp" />
 
+    <Button
+        android:id="@+id/camera"
+        android:layout_width="104dp"
+        android:layout_height="wrap_content"
+        android:text="Camera"
+        android:layout_marginTop="200dp" />
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -46,6 +53,7 @@
         android:padding="16dp"
         android:orientation="vertical"
         tools:context="com.blogspot.android_er.androidclient.OneFragment">
+
     </LinearLayout>
 
 </RelativeLayout>
