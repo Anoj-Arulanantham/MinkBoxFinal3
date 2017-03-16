@@ -11,6 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:contentDescription="@string/sml"
+        android:background="@null"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:src="@drawable/small" />
 
     <ImageButton
@@ -18,6 +21,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:background="@null"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:contentDescription="@string/med"
         android:src="@drawable/medium" />
 
@@ -26,6 +32,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:background="@null"
+        android:padding="10dp"
         android:contentDescription="@string/lrg"
         android:src="@drawable/large" />
 </LinearLayout>

@@ -219,8 +219,8 @@ public class TwoFragment extends Fragment implements View.OnClickListener{
             brushDialog.show();
         }else if(view.getId()==R.id.new_btn){
             AlertDialog.Builder newDialog = new AlertDialog.Builder(getActivity());
-            newDialog.setTitle("New drawing");
-            newDialog.setMessage("Start new drawing (you will lose the current drawing)?");
+            newDialog.setTitle("New Drawing");
+            newDialog.setMessage("Are you sure you want to start a new drawing? All unsaved changes will be lost.");
             newDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
                 public void onClick(DialogInterface dialog, int which){
                     drawView.startNew();
@@ -235,8 +235,8 @@ public class TwoFragment extends Fragment implements View.OnClickListener{
             newDialog.show();
         }else if(view.getId()==R.id.save_btn){
             AlertDialog.Builder saveDialog = new AlertDialog.Builder(getActivity());
-            saveDialog.setTitle("Save drawing");
-            saveDialog.setMessage("Save drawing to device Gallery?");
+            saveDialog.setTitle("Save Drawing");
+            saveDialog.setMessage("Would you like to save this drawing to the device gallery?");
             saveDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
                 public void onClick(DialogInterface dialog, int which){
                     drawView.setDrawingCacheEnabled(true);

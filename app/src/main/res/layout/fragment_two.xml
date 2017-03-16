@@ -19,35 +19,55 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:contentDescription="@string/start_new"
-            android:src="@drawable/new_pic" />
+            android:scaleType="fitCenter"
+            android:padding="5dp"
+            android:background="@null"
+            android:adjustViewBounds="true"
+            android:src="@drawable/new96blue" />
 
         <ImageButton
             android:id="@+id/draw_btn"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:contentDescription="@string/brush"
-            android:src="@drawable/brush" />
+            android:scaleType="fitCenter"
+            android:padding="5dp"
+            android:background="@null"
+            android:adjustViewBounds="true"
+            android:src="@drawable/brush96blue" />
 
         <ImageButton
             android:id="@+id/erase_btn"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:contentDescription="@string/erase"
-            android:src="@drawable/eraser" />
+            android:scaleType="fitCenter"
+            android:padding="5dp"
+            android:background="@null"
+            android:adjustViewBounds="true"
+            android:src="@drawable/eraser96blue" />
 
         <ImageButton
             android:id="@+id/save_btn"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:contentDescription="@string/save"
-            android:src="@drawable/save" />
+            android:scaleType="fitCenter"
+            android:padding="5dp"
+            android:background="@null"
+            android:adjustViewBounds="true"
+            android:src="@drawable/save96blue" />
 
         <ImageButton
             android:id="@+id/send_btn"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:contentDescription="@string/send"
-            android:src="@android:drawable/stat_sys_upload" />
+            android:scaleType="fitCenter"
+            android:padding="5dp"
+            android:background="@null"
+            android:adjustViewBounds="true"
+            android:src="@drawable/upload96blue" />
     </LinearLayout>
 
     <com.example.anojarulanantham.minkboxfinal.DrawingView
