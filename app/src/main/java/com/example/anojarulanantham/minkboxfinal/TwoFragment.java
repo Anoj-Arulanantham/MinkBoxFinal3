@@ -271,6 +271,25 @@ public class TwoFragment extends Fragment implements View.OnClickListener{
             newDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
                 public void onClick(DialogInterface dialog, int which){
                     doodle = getBitmapFromView(drawView);
+
+                    drawView.setDrawingCacheEnabled(true);
+                    String imgSaved = MediaStore.Images.Media.insertImage(
+                            getActivity().getContentResolver(), drawView.getDrawingCache(),
+                            UUID.randomUUID().toString()+".png", "drawing");
+
+                    if(imgSaved!=null){
+                        Toast savedToast = Toast.makeText(getActivity().getApplicationContext(),
+                                "Drawing saved to Gallery!", Toast.LENGTH_SHORT);
+                        savedToast.show();
+                    }
+                    else{
+                        Toast unsavedToast = Toast.makeText(getActivity().getApplicationContext(),
+                                "Oops! Image could not be saved.", Toast.LENGTH_SHORT);
+                        unsavedToast.show();
+                    }
+
+                    drawView.destroyDrawingCache();
+
                     MyClientTask myClientTask = new MyClientTask("192.168.43.193", 12345);
                     myClientTask.execute("sending image");
                     dialog.dismiss();
