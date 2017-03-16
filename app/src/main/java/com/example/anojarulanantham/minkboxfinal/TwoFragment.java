@@ -3,9 +3,15 @@ package com.example.anojarulanantham.minkboxfinal;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +19,12 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.UUID;
 
 /**
@@ -24,6 +36,7 @@ public class TwoFragment extends Fragment implements View.OnClickListener{
     private DrawingView drawView;
     private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn, sendBtn;
     private float smallBrush, mediumBrush, largeBrush;
+    private Bitmap doodle;
 
     public TwoFragment() {
 
@@ -92,6 +105,25 @@ public class TwoFragment extends Fragment implements View.OnClickListener{
         return v;
     }
 
+    public static Bitmap getBitmapFromView(View view) {
+        //Define a bitmap with the same size as the view
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(),Bitmap.Config.ARGB_8888);
+        //Bind a canvas to it
+        Canvas canvas = new Canvas(returnedBitmap);
+        //Get the view's background
+        Drawable bgDrawable =view.getBackground();
+        if (bgDrawable!=null)
+            //has background drawable, then draw it on the canvas
+            bgDrawable.draw(canvas);
+        else
+            //does not have background drawable, then draw white background on the canvas
+            canvas.drawColor(Color.WHITE);
+        // draw the view on the canvas
+        view.draw(canvas);
+        //return the bitmap
+        return returnedBitmap;
+    }
+
     private View.OnClickListener paintClicked = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -107,6 +139,7 @@ public class TwoFragment extends Fragment implements View.OnClickListener{
             }
         }
     };
+
 
     @Override
     public void onClick(View view){
@@ -237,6 +270,9 @@ public class TwoFragment extends Fragment implements View.OnClickListener{
             newDialog.setMessage("Do you want to send this image to your mInk Box?");
             newDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
                 public void onClick(DialogInterface dialog, int which){
+                    doodle = getBitmapFromView(drawView);
+                    MyClientTask myClientTask = new MyClientTask("192.168.43.193", 12345);
+                    myClientTask.execute("sending image");
                     dialog.dismiss();
                 }
             });
@@ -246,6 +282,47 @@ public class TwoFragment extends Fragment implements View.OnClickListener{
                 }
             });
             newDialog.show();
+        }
+    }
+
+
+    public class MyClientTask extends AsyncTask<String, Void, Void> {
+
+        String dstAddress;
+        int dstPort;
+        String response;
+
+        MyClientTask(String addr, int port) {
+            dstAddress = addr;
+            dstPort = port;
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            try {
+                System.out.println("mInkBox");
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                Bitmap resizedImage = Bitmap.createScaledBitmap(doodle, 264, 176, true);
+                resizedImage.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream .toByteArray();
+                String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                System.out.println(encoded);
+
+                Socket socket = new Socket("192.168.43.193", 12345);
+                OutputStream outputStream = socket.getOutputStream();
+                PrintStream printStream = new PrintStream(outputStream);
+                printStream.print(encoded);
+
+                socket.close();
+
+            } catch (UnknownHostException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return null;
         }
     }
 
