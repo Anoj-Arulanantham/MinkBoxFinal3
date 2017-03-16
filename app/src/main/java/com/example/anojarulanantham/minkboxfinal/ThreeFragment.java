@@ -18,6 +18,7 @@ import android.os.BatteryManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,8 +43,7 @@ public class ThreeFragment extends Fragment {
     private EditText name;
     private EditText phoneNumber;
     private EditText message;
-    private EditText n;
-    private ImageView iv;
+    private SwitchCompat lowBatterySwitch;
 
     public ThreeFragment() {
 
@@ -64,14 +64,14 @@ public class ThreeFragment extends Fragment {
         name = ((EditText) v.findViewById(R.id.nameentry));
         phoneNumber = ((EditText) v.findViewById(R.id.numberentry));
         message = ((EditText) v.findViewById(R.id.messageentry));
-
-        n = ((EditText) v.findViewById(R.id.nameentry));
+        lowBatterySwitch = (SwitchCompat) v.findViewById(R.id.mySwitch);
 
         System.out.println(phoneNumber);
         Button saveData = (Button) v.findViewById(R.id.saveData);
         saveData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int loops = 0;
                 bitmap = Bitmap.createBitmap(176, 264, Bitmap.Config.ARGB_8888);
                 Canvas canvas = new Canvas(bitmap);
                 Typeface font = Typeface.createFromAsset(getContext().getAssets(), "os-regular.ttf");
@@ -85,7 +85,16 @@ public class ThreeFragment extends Fragment {
                 canvas.drawText("Phone:",10,60,paint);
                 canvas.drawText(phoneNumber.getText().toString(),55,60,paint);
                 canvas.drawText("Message:",10,90,paint);
-                canvas.drawText(message.getText().toString(),65,90,paint);
+                for(int i = 0; i < message.getText().toString().length(); i = i + 24){
+                    if(i + 24 < message.getText().toString().length()) {
+                        canvas.drawText(message.getText().toString().substring(i, i + 24), 12, (105 + (loops * 15)), paint);
+                    }else{
+                        canvas.drawText(message.getText().toString().substring(i, message.getText().toString().length()), (12), (105 + (loops * 15)), paint);
+                    }
+                    loops = loops + 1;
+                }
+                //canvas.drawText(message.getText().toString(),13,105,paint);
+                lowBatterySwitch.setChecked(true);
 
                 MyClientTask myClientTask = new MyClientTask("192.168.43.193", 12345);
                 myClientTask.execute("sending image");
@@ -103,30 +112,32 @@ public class ThreeFragment extends Fragment {
             float batteryPct = level / (float)scale;
             System.out.println(level);
 
-            NotificationCompat.Builder mBuilder =
-                    (NotificationCompat.Builder) new NotificationCompat.Builder(getActivity())
-                            .setSmallIcon(R.drawable.matt)
-                            .setContentTitle("My notification")
-                            .setContentText("Hello World!")
-                            .setPriority(Notification.PRIORITY_MAX);
+            if (level < 10 && !lowBatterySwitch.isChecked()) {
+                NotificationCompat.Builder mBuilder =
+                        (NotificationCompat.Builder) new NotificationCompat.Builder(getActivity())
+                                .setSmallIcon(R.drawable.matt)
+                                .setContentTitle("mInk Box")
+                                .setContentText("Your battery level is low!")
+                                .setPriority(Notification.PRIORITY_MAX);
 
-            Intent resultIntent = new Intent(getActivity(), MainActivity.class);
+                Intent resultIntent = new Intent(getActivity(), MainActivity.class);
 
-            TaskStackBuilder stackBuilder = TaskStackBuilder.create(getActivity());
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(getActivity());
 
-            stackBuilder.addParentStack(MainActivity.class);
+                stackBuilder.addParentStack(MainActivity.class);
 
-            stackBuilder.addNextIntent(resultIntent);
-            PendingIntent resultPendingIntent =
-                    stackBuilder.getPendingIntent(
-                            0,
-                            PendingIntent.FLAG_UPDATE_CURRENT
-                    );
-            mBuilder.setContentIntent(resultPendingIntent);
-            NotificationManager mNotificationManager =
-                    (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+                stackBuilder.addNextIntent(resultIntent);
+                PendingIntent resultPendingIntent =
+                        stackBuilder.getPendingIntent(
+                                0,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
+                mBuilder.setContentIntent(resultPendingIntent);
+                NotificationManager mNotificationManager =
+                        (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
 
-            mNotificationManager.notify(0, mBuilder.build());
+                mNotificationManager.notify(0, mBuilder.build());
+            }
         }
     };
 
