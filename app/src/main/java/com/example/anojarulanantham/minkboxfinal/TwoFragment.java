@@ -22,7 +22,7 @@ import java.util.UUID;
 public class TwoFragment extends Fragment implements View.OnClickListener{
 
     private DrawingView drawView;
-    private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn;
+    private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn, sendBtn;
     private float smallBrush, mediumBrush, largeBrush;
 
     public TwoFragment() {
@@ -59,6 +59,9 @@ public class TwoFragment extends Fragment implements View.OnClickListener{
 
         saveBtn = (ImageButton) v.findViewById(R.id.save_btn);
         saveBtn.setOnClickListener(this);
+
+        sendBtn = (ImageButton) v.findViewById(R.id.send_btn);
+        sendBtn.setOnClickListener(this);
 
         ImageButton brownButton = (ImageButton) v.findViewById(R.id.brown);
         ImageButton redButton = (ImageButton) v.findViewById(R.id.red);
@@ -228,6 +231,21 @@ public class TwoFragment extends Fragment implements View.OnClickListener{
                 }
             });
             saveDialog.show();
+        }else if(view.getId()==R.id.send_btn) {
+            AlertDialog.Builder newDialog = new AlertDialog.Builder(getActivity());
+            newDialog.setTitle("Send Image");
+            newDialog.setMessage("Do you want to send this image to your mInk Box?");
+            newDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which){
+                    dialog.dismiss();
+                }
+            });
+            newDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which){
+                    dialog.cancel();
+                }
+            });
+            newDialog.show();
         }
     }
 

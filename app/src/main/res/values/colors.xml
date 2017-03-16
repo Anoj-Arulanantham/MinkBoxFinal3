@@ -6,4 +6,7 @@
     <color name="windowBackground">#125688</color>
     <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="disable_foreground_grey">#42221f1f</color>
+    <color name="disable_thumb_grey">#1c000000</color>
+    <color name="enable_thumb_blue">#125688</color>
 </resources>

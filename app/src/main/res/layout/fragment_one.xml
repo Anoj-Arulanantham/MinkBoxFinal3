@@ -28,7 +28,7 @@
         android:layout_marginBottom="10dp" />
 
     <Button
-        android:text="Push Image"
+        android:text="Send Image"
         android:layout_width="104dp"
         android:layout_height="wrap_content"
         android:id="@+id/pushImage"
