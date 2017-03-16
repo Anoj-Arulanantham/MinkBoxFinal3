@@ -11,7 +11,7 @@
     <ImageView
         android:layout_width="208dp"
         android:layout_height="375dp"
-        android:src="@drawable/harder"
+        android:src="@drawable/mink"
         app:srcCompat="@mipmap/ic_launcher"
         android:id="@+id/imageView"
         android:scaleType="fitXY"

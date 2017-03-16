@@ -2,11 +2,5 @@
 <resources>
     <color name="colorPrimary">#172A3A</color>
     <color name="colorPrimaryDark">#132330</color>
-    <color name="textColorPrimary">#125688</color>
-    <color name="windowBackground">#125688</color>
-    <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#BF4E30</color>
-    <color name="disable_foreground_grey">#42221f1f</color>
-    <color name="disable_thumb_grey">#1c000000</color>
-    <color name="enable_thumb_blue">#125688</color>
 </resources>
