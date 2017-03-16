@@ -84,5 +84,15 @@
         android:layout_marginLeft="5dp"
         android:hint="Enter your message"/>
 
+    <Button
+        android:text="Save"
+        android:layout_height="wrap_content"
+        android:id="@+id/savetext"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/imageView"
+        android:layout_marginTop="290dp"
+        android:layout_width="300dp"
+        android:theme="@style/PrimaryButton" />
+
 
 </RelativeLayout>
