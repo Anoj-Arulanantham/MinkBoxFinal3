@@ -84,4 +84,5 @@
         android:layout_marginLeft="5dp"
         android:hint="Enter your message"/>
 
+
 </RelativeLayout>
